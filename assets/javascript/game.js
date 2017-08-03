@@ -12,8 +12,17 @@
 	//Array of letter choices equivalent to numbers (0 = A, 1 = B, 2 = C, 3 = D)
 	var questionLetter = ["A", "B", "C", "D"];
 
-	//Record of current question player is on
+	//Record of the question number (1-10) and current question (e.g. q2, q10, q38) the player is on
+	var questionNum;
 	var currentQuestion;
+
+	//Variable of max number of questions and delay times
+	var maxQuestions = 10; //10 questions asked per round
+	var timePerQuestion = 30; //30 seconds allotted per question
+	var answerPause = 3000; //3 seconds before the answer is revealed
+	var answerDisplayTime = 5000; //5 seconds when answer is displayed 
+	var intermissionTime = 5000; //5 seconds of intermission before next question is revealed
+
 
 	//Boolean of whether the question is available to be answered
 	var canAnswer = false;
@@ -68,24 +77,36 @@
 			questions.push(randQ);
 		}
 
-		//Loops through the ten questions
-		for(var i = 0; i < 1; i++) {
-			console.log("On question " + (i+1));
-			//Stores the current question as global for reference in other methods
-			currentQuestion = questions[i];
-			//Updates the screen for the current question
-			displayQ(currentQuestion);
-			//Starts the timer, which exits upon timeup or a submitted answer
-			startTimer();
-		}
+		questionNum = 0;
+		nextQuestion();
 
-		//endGame()
-		console.log("Endgame");
+	}
+
+	function nextQuestion() {
+
+		if(questionNum < 1){//maxQuestions) {
+
+		console.log("On question " + (questionNum + 1));
+		//Stores the current question as global for reference in other methods
+		currentQuestion = questions[questionNum];
+		//Updates the screen for the current question
+		displayQ(currentQuestion);
+		//Updates the question number for the next round
+		questionNum++;
+		//Starts the timer, which exits upon timeup or a submitted answer
+		startTimer();
+		
+		}
+		else {
+			endGame()
+			console.log("Endgame");
+		}
 	}
 
 	//Displays the question and choices on the screen
 	function displayQ(qNumber) {
 		//Put up Regis text
+		$("#message").text("You're currently on question " + (questionNum + 1));
 
 		//Lists the question and the four answer options
 		$("#question").text(questionPool[qNumber].question);
@@ -101,7 +122,7 @@
 	// Function that counts down on the question clock until time's up or question is answered
 	function startTimer() {
 		//Starts timer at 30 seconds
-		var questionTimer = 30;
+		var questionTimer = timePerQuestion;
 		//Sets an function interval of every second. Each interval, the timer will decrease by 1
 		//Upon time up, it will call the answer function with a non-response answer ("")
 		//If the user answers the question, the countdown is halted
@@ -111,7 +132,7 @@
 				$("#timer").html("<h2><b>" + questionTimer + "</b></h2>")
 			}
 			else {
-				$("#timer").html("<h2 style='color:red;'>" + questionTimer + "</h2>")	
+				$("#timer").html("<h2 style='color:red;'><b>" + questionTimer + "</b></h2>")	
 			}
 			//If questionTimer is 0, calls answer(""); otherwise decreases it by 1
 			questionTimer-- || answer("");
@@ -122,9 +143,9 @@
 	//If answered with blank, assumes no answer
 	function answer(theirAnswer) {
 		//clears the timer
-		console.log("clearing countdown");
+		//console.log("clearing countdown");
 		clearInterval(countdown);
-		console.log("cleared countdown");
+		//console.log("cleared countdown");
 		//prevents them from further answering the question
 		canAnswer = false;
 		//if no answer, submits non-response
@@ -138,7 +159,7 @@
 			//Make option orange
 
 			//Waits 3 seconds for tension and then grades your answer
-			setTimeout(function() { grade(theirAnswer)}, 3000);
+			setTimeout(function() { grade(theirAnswer)}, answerPause);
 
 		}
 	}
@@ -152,7 +173,7 @@
 		//Show correct answer as orange
 		
 		//Waits 5 seconds before moving onto the intermission
-		setTimeout(function() { intermission() }, 5000);
+		setTimeout(function() { intermission() }, answerDisplayTime);
 	}
 
 	function grade(theirAnswer) {
@@ -173,13 +194,13 @@
 		$("#option" + correctAnswer).css("background-color: bluegreen;");
 		
 		//Waits 5 seconds before moving onto the intermission
-		setTimeout(function() { intermission() }, 5000);
+		setTimeout(function() { intermission() }, answerDisplayTime);
 
 	}
 
 	//Function that handles the intermission at the end of a round before the next question
 	function intermission() {
-		$("#message").html('New message');
+		$("#message").html("Intermission");
 		//Resets button colors
 		// $("#option1").css(reset);
 		// $("#option2").css(reset);
@@ -188,11 +209,19 @@
 
 		//Waits 5 seconds before ending; as intermission ends, so do all the previous methods other than beginGame
 		//Thus, the forloop at the end of beginGame finally gets to move onto the next i
-		setTimeout(function() { }, 5000);
-		console.log("Next");
-
+		setTimeout(function() { nextQuestion() }, intermissionTime);
+		
 	}
 
+	//Function that handles the end of a new game
+	function endGame() {
+		$("#message").html("Here are your final results!");
+		$("timer").html()
+		setTimeout(function() {
+			//message based on your result
+		}, intermissionTime);
+
+	}
 	
 
 	beginGame();
