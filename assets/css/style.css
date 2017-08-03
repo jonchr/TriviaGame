@@ -1,0 +1,75 @@
+
+body {
+	background-color: #ccc;
+	text-align: center;
+}
+
+* {
+	border: 1px solid black; 
+}
+
+#wrapper {
+	/*background-color: purple;*/
+	opacity: 70%;
+	height: 70%;
+	width: 70%;
+	margin: auto;
+
+}
+
+/*TV and TalkBubble IDs copied from https://css-tricks.com/examples/ShapesOfCSS/*/
+#tv {
+  position: relative;
+  width: 50%;
+  height: 40%;
+  margin: 20px 0;
+  background: red;
+  /*border: 3px solid white;*/
+  border-radius: 50% / 10%;
+  color: white;
+  text-align: center;
+  text-indent: .1em;
+}
+#tv:before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  right: -5%;
+  left: -5%;
+  background: inherit;
+  border-radius: 5% / 50%;
+}
+
+#talkbubble {
+   width: 300px;
+   height: 200px;
+   background: red;
+   position: relative;
+   -moz-border-radius:    10px;
+   -webkit-border-radius: 10px;
+   border-radius:         10px;
+   /*margin: 0px auto;*/
+}
+#talkbubble:before {
+   content:"";
+   position: absolute;
+   right: 100%;
+   top: 87px;
+   width: 0;
+   height: 0;
+   border-top: 13px solid transparent;
+   border-right: 26px solid red;
+   border-bottom: 13px solid transparent;
+}
+
+
+.bubbleFace {
+	background: #faf3fb;
+	height: 200px;
+	width: 200px;
+	border-style: solid;
+	border-color: yellow;
+	border-width: 7px;
+}
+
