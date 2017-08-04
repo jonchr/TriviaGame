@@ -2,17 +2,23 @@
 
 	var introduction = "Hello there, and welcome to Who Wants to Be a Trivia Master! I'm your host, Regis Philbin, and I hope you're ready to answer some trivia. I have a set of ten questions with four possible answers, and you will have thirty seconds to answer them. When you are, just hit the 'Begin' button below!";
 
-	var questionIntro = ["Alright, let's get started. The first question is...", "Here's our second question: ", "The next question is: ", "Here is our final question. I hope you're ready"];
-	//Array of Regis's sayings for when the player was correct
-	var correctResponses = [];
-	//Array of Regis's sayings for when the player was incorrect
-	var incorrectResponses = [];
+	var questionIntro = ["Alright, let's get started. The first question is...", //first question lead in
+							"Here comes the second question: ", //second question lead in
+							"Our third question is: ", //third question lead in
+							"It's time for question four: ", //fourth question lead in
+							"Ready for question five?", //fifth question lead in
+							"Question six is:", //sixth question lead in
+							"Lucky number seven's on its way", //seventh question lead in
+							"Watch out! Here's question eight: ", //eighth question lead in
+							"Hang in there! Here's question nine: ", //ninth question lead in
+							"Here is our final question. I hope you're ready"]; //tenth question lead in
+
 	//Array of Regis's sayings for when the player did not answer
-	var noResponses = ["Getting the jitters out, are we? Take a few seconds now.", //first timeout response
+	var noResponse = ["Getting the jitters out, are we? Take a few seconds now.", //first timeout response
 						"Just in case you missed it, you have 30 seconds to answer the question.", //second timeout response
 						"I know it can be tough for some people, but it's in your best interest to submit an answer.", //third timeout response
-						"The silent treatment eh? An unconventional and probably unsuccessful strategem", //fourth timeout response
-						"Allow me to offer you some advice: try clicking one of the buttons or letter keys.", //fifth timeout response
+						"The silent treatment eh? An unconventional and probably unsuccessful strategem.", //fourth timeout response
+						"Let me offer you some advice: try clicking one of the buttons or letter keys.", //fifth timeout response
 						"Did you fall asleep? Maybe this next one will wake you up.", //sixth timeout response
 						"Zzz. Oh, huh? Sorry, figured it wouldn't hurt if I dozed off too.", //seventh timeout response
 						"I hope you're ok. Blink twice if you need me to call for help.", //eighth timeout response

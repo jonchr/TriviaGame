@@ -1,68 +1,80 @@
-
 body {
-	background-color: #ccc;
+  background-image: url("../images/digital_tube_ones_zeroes.jpg");
+}
+
+h2, h3 {
+  margin: 0px;
+}
+
+.container {
 	text-align: center;
+  margin: 4% auto 0%;
 }
 
-* {
-	border: 1px solid black; 
+#musicButton {
+    /*Formatting for the letter button  */
+    color: black; /*white music note*/
+    background-color: white; /*black background*/
+    border: 3px solid black; /*white border*/
+    border-radius: 50%; /*Circular border*/
+    padding: 7px; /*Slight padding between music note and border*/
+
+    /*Position set to near top left corner*/
+    position: absolute; 
+    top: 10px;
+    left: 10px;
+    float: left;
 }
 
-#wrapper {
-	/*background-color: purple;*/
-	opacity: 70%;
-	height: 70%;
-	width: 70%;
-	margin: auto;
-
-}
-
-/*TV and TalkBubble IDs copied from https://css-tricks.com/examples/ShapesOfCSS/*/
-#tv {
-  position: relative;
-  width: 50%;
-  height: 40%;
-  margin: 20px 0;
-  background: red;
-  /*border: 3px solid white;*/
-  border-radius: 50% / 10%;
-  color: white;
-  text-align: center;
-  text-indent: .1em;
-}
-#tv:before {
-  content: '';
-  position: absolute;
-  top: 10%;
-  bottom: 10%;
-  right: -5%;
-  left: -5%;
-  background: inherit;
-  border-radius: 5% / 50%;
-}
-
+/*TalkBubble IDs copied from https://css-tricks.com/examples/ShapesOfCSS/*/
 #talkbubble {
-   width: 300px;
+   width: 600px;
    height: 200px;
-   background: yellow;
+   background: white;
    position: relative;
+   border: 4px solid black;
    -moz-border-radius:    10px;
    -webkit-border-radius: 10px;
    border-radius:         10px;
-   /*margin: 0px auto;*/
+   
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   margin: 0px auto;
 }
 #talkbubble:before {
    content:"";
    position: absolute;
    right: 100%;
    top: 87px;
-   width: 0;
+   width: 100px;
    height: 0;
    border-top: 13px solid transparent;
    border-right: 26px solid yellow;
    border-bottom: 13px solid transparent;
 }
 
+.optionButton {
+  width: 400px;
+  height: 50px;
+  color: white;
+  font-weight: bold;
+  background: #aaa;
+  border: 3px solid #444;
+  border-radius: 40px;
+}
+/*.optionBubble:before {
+  content:"";
+  position: absolute;
+  right: 100%;
+  top: 87px;
+  width: 0;
+  height: 0;
+  border-top: 13px solid transparent;
+  border-right: 26px solid yellow;
+  border-bottom: 13px solid transparent;
+
+}*/
 
 .bubbleFace {
 	background: #faf3fb;
@@ -73,27 +85,34 @@ body {
 	border-width: 7px;
 }
 
-/*@keyframes fontbulger {
+.startButton {
+  border: 1px double black`;
+}
+
+@keyframes fontbulger {
   0%, 100% {
-    font-size: 24px;
-    color: red
+    font-size: 30px;
   }
   50% {
-    font-size: 36px;
+    font-size: 44px;
+    } 
+}
+
+.bulgingRed {
     color: red;
-    position: relative;
-    left:-8px;
-    top:-6px;
+    font-weight: bold;
+    animation: fontbulger 1s infinite;
+}
+
+@keyframes optionFlash {
+  0%, 100% {
   }
-  25%, 75% {
-    font-size: 30px;
-    position: relative;
-    left:-4px;
-    top: -1px;
+  50% {
+    background-color: turquoise;
   }
 }
 
-#box {
-   animation: fontbulger 2s infinite;
-}*/
+.correctAnswerFlash {
+  animation: optionFlash .2s infinite;
+}
 
