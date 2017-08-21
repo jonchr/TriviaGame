@@ -28,38 +28,39 @@
 
 	//Boolean of whether to play sounds or not
 	var muted = false;
+	var currentSong;
+
+	//Represents the phase of the game. Q1-3 is phase 1, Q4-6 is phase 2, Q7-9 is phase 3, and Q10 is phase 4
+	//The background and question music will change with each phase. 
+	//Also, there is extra music during intermission between phase 1 & 2 and 2 & 3
+	var phase = 0;
 	
 	//Assigns each option button their equivalent answer (can I combine these to make it more DRY?)
 	//Only allows an answer when canAnswer is true
 	$(".optionButton").on("click", function() {
 		if(canAnswer) {
-			answer($(this).attr("data-option"));
+			answer(questionLetter.indexOf($(this).attr("data-letter")));
 		}
 	});
 
-	// Allows/mutes music on button press. Also inverse button colors
+	// Allows/mutes music on button press. Also inverts button colors
 	$("#musicButton").on("click", function() {
 		//Flips mute boolean
 		muted = !muted;
 
 		//Starts or pauses music as appropriate
 		if(muted) {
-			console.log("Muting");
-			//Stops all songs from playing
-			introSong.pause();
-			outroSong.pause();
-			answerPauseMusic.pause();
-			correctSong.pause();
-			wrongSong.pause();
-			noResponseSong.pause();
-			questionMusic.pause();
+			console.log("Muting current song");
+			//Stops current from playing
+			currentSong.pause();
 
 			$(this).css('color', 'white');
 			$(this).css('backgroundColor', 'black');
 			$(this).css('borderColor', 'white');
 		}
 		else {
-			console.log("Playing");
+			console.log("Playing", currentSong.getAttribute("src").replace("./assets/audio/", ""));
+			currentSong.play();
 			$(this).css('color', 'black');
 			$(this).css('backgroundColor', 'white');
 			$(this).css('borderColor', 'black');
@@ -68,17 +69,18 @@
 
 	//Answers the question if A, B, C, or D is pressed and canAnswer is true
 	document.onkeyup = function(event) {
-		var choice = event.key.toUpperCase();
 		if(canAnswer) {
+			var choice = event.key.toUpperCase();
 			if(choice === "A" || choice === "B" || choice === "C" || choice === "D") {
 				//If the answer is appropriate, converts it to the position number and submits it
-				answer(questionLetter.indexOf(choice));	
+				answer(questionLetter.indexOf(choice));
 			}
 		}
 	};
 
 	function welcomeMessage() {
-		introSong.play();
+		currentSong = introSong;
+		currentSong.play();
 		$("#question").html(introduction);
 		$(".optionButton").hide();
 		$("#timer").append("<button id='start'>Start</button>");
@@ -87,7 +89,7 @@
 
 	//Starts the game when the Begin button is pressed and runs it through to endGame
 	function beginGame() {
-		introSong.pause();
+		phase = 1;
 		$("#timer").empty();
 
 		//Randomly generates the 10 questions that will be asked
@@ -105,18 +107,18 @@
 
 		$(".optionButton").show();
 
-		questionNum = 0;
+		questionNum = 1;
 		nextQuestion();
 
 	}
 
 	function nextQuestion() {
 
-		if(questionNum < questions.length) {
+		if(questionNum - 1 < questions.length) {
 
-		console.log("On question " + (questionNum + 1));
+		console.log("On question " + (questionNum));
 		//Stores the current question as global for reference in other methods
-		currentQuestion = questions[questionNum];
+		currentQuestion = questions[questionNum - 1];
 		//Updates the screen for the current question
 		displayQ(currentQuestion);
 		//Updates the question number for the next round
@@ -134,13 +136,34 @@
 	//Displays the question and choices on the screen
 	function displayQ(qNumber) {
 		
+		//Updates the background and question music depending on the phase of the game
+		currentSong.pause();
+		switch(phase) {
+			case 1:
+				currentSong = questionMusic1;
+				break;
+			case 2:
+				currentSong = questionMusic2;
+				break;
+
+			case 3:
+				currentSong = questionMusic3;
+				break;
+
+			case 4:
+				currentSong = questionMusic4;
+				break;
+			default:
+				//NO MUSIC
+		}
+		currentSong.currentTime = 0;
 		//If not muted, plays the question music
 		if(!muted) {
-			questionMusic.play();
+			currentSong.play();
 		}
 
 		//Put up Regis text
-		$("#message").text("Question " + (questionNum + 1));
+		$("#message").text("Question " + (questionNum));
 
 		//Resets the text color to black
 		$("#question").css("color","black");
@@ -199,10 +222,11 @@
 			//Marks their selected answer in orange
 			$("#option" + (parseInt(theirAnswer) + 1)).css("background-color", "orange");
 
+			currentSong.pause();
+			currentSong = answerPauseMusic;
+			currentSong.currentTime = 0;
 			if(!muted){
-				questionMusic.pause();
-				questionMusic.currentTime = 0;
-				answerPauseMusic.play();
+				currentSong.play();
 			}
 			
 			//Waits 3 seconds for tension and then grades your answer
@@ -214,11 +238,10 @@
 	//Reacts to the question as a non-response
 	function nonResponse() {
 
+		currentSong = noResponseSong;
 		//Stops the question music and plays the no response sound effect
 		if(!muted){
-			questionMusic.pause();
-			questionMusic.currentTime = 0;
-			noResponseSong.play();
+			currentSong.play();
 		}
 
 		console.log("No response");
@@ -233,24 +256,26 @@
 	}
 
 	function grade(theirAnswer) {
-		questionMusic.pause();
-		questionMusic.currentTime = 0;
-		console.log("Selected answer: " + theirAnswer);
+		currentSong.pause();
+		console.log("Selected answer: " + questionLetter[theirAnswer]);
 		var correctAnswer = questionPool[currentQuestion].answer;
-		console.log("Correct answer: " + correctAnswer);
+		console.log("Correct answer: " + questionLetter[correctAnswer]);
+		
 		if(theirAnswer === correctAnswer) {
 			console.log("Correct!");
 			correct++;
+			currentSong = correctSong;
 			if(!muted) {
-				correctSong.play();
+				currentSong.play();
 			}
 			$("#message").html("And you are right!");
 		}
 		else {
 			console.log("Incorrect");
 			incorrect++;
+			currentSong = wrongSong;
 			if(!muted) {	
-				wrongSong.play();
+				currentSong.play();
 			}
 			$("#message").html("I am sorry. That is incorrect.");
 		}
@@ -275,14 +300,46 @@
 
 	//Function that handles the intermission at the end of a round before the next question
 	function intermission() {
-		$("#message").html(questionIntro[questionNum]);
+		$("#message").html(questionIntro[questionNum - 1]);
 		//Hides timer, question, and option
 		$("#timer").text("");
 		$("#question").css("color", "white");
 		$(".optionButton").css("color", "#ccc");
 		//Resets button colors
 		$(".optionButton").css("background-color", "#ccc");
-		
+	
+		//If question 4, moves the phase forward 1
+		if(questionNum === 4) {
+			phase++;
+			//Plays phase up intermission music
+			currentSong.pause();
+			currentSong = phaseUpMusic1
+			currentSong.play();
+			//Updates background image for phase
+			//sets intermission music to long enough for the full music
+			intermissionTime = 5000;
+		}
+		//If question 7, moves the phase forward 1
+		else if (questionNum === 7) {
+			phase++;
+			//Plays phase up intermission music
+			currentSong.pause();
+			currentSong = phaseUpMusic2;
+			currentSong.play();
+			//Updates background image for phase
+			//sets intermission music to long enough for the full music
+			intermissionTime = 4500;
+		}
+		//If question 10, moves the phase forward 1
+		else if (questionNum === 10) {
+			phase++;
+			//Updates background image for phase
+		}
+		else {
+			//resets intermission time to 3 seconds
+			intermissionTime = 3000;
+		}
+
 		//Waits a few seconds for the intermission, and then moves onto the next question
 		setTimeout(function() { nextQuestion() }, intermissionTime);
 	}
@@ -298,8 +355,9 @@
 		$("#message").html("Here are your final results!");
 		$("#question").html("<p><b>Correct Answers: </b>" + correct + "<br /><b>Incorrect Answers: </b>" + incorrect + "<br /><b>Unanswered Questions: </b>" + unanswered) + "</p>";
 		
+		currentSong = outroSong;
 		if(!muted) {
-			outroSong.play();
+			currentSong.play();
 		}
 
 		$(".optionButton").hide();
@@ -309,7 +367,7 @@
 			$("#timer").append('<p>Hope you had fun! If you would like to play again, hit the "Restart" button below!</p>');
 			$("#timer").append("<button id='start'>Restart</button>");
 			$(document).on("click", "#start", function() { 
-				outroSong.pause();
+				currentSong.pause();
 				beginGame();
 			})
 		}, intermissionTime);
