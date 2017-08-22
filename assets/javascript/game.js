@@ -82,7 +82,15 @@
 		currentSong = introSong;
 		currentSong.play();
 		$("#question").html(introduction);
+		//Resets the optionButton colors because sometimes it doesn't happen on load
+		$(".optionButton").css("background-color","#222");
+		$(".optionButton").css("border-top", "5px solid lightblue");
+		$(".optionButton").css("border-bottom", "5px solid lightblue");
+		$(".optionButton").css("width", "87%");
+		$(".optionButton").css("margin", "5px auto");
 		$(".optionButton").hide();
+
+		
 		$("#timer").append("<button id='start'>Start</button>");
 		$(document).on("click", "#start", beginGame);
 	}
@@ -150,14 +158,14 @@
 
 		//Resets the text color to black
 		$("#question").css("color","black");
-		$(".optionButton").css("color","black");
+		$(".questionText").css("color","white");
 
 		//Lists the question and the four answer options
 		$("#question").text(questionPool[qNumber].question);
-		$("#option1").html("<span class='buttonLetter A'>A &#x2022</span><span class='questionText'>" + questionPool[qNumber].option[0] + "</span>");
-		$("#option2").html("<span class='buttonLetter B'>B &#x2022</span><span class='questionText'>" + questionPool[qNumber].option[1] + "</span>");
-		$("#option3").html("<span class='buttonLetter C'>C &#x2022</span><span class='questionText'>" + questionPool[qNumber].option[2] + "</span>");
-		$("#option4").html("<span class='buttonLetter D'>D &#x2022</span><span class='questionText'>" + questionPool[qNumber].option[3] + "</span>");
+		$("#option1").html("<span class='buttonLetter A'>A &#x2022</span><span class='questionText A'>" + questionPool[qNumber].option[0] + "</span>");
+		$("#option2").html("<span class='buttonLetter B'>B &#x2022</span><span class='questionText B'>" + questionPool[qNumber].option[1] + "</span>");
+		$("#option3").html("<span class='buttonLetter C'>C &#x2022</span><span class='questionText C'>" + questionPool[qNumber].option[2] + "</span>");
+		$("#option4").html("<span class='buttonLetter D'>D &#x2022</span><span class='questionText D'>" + questionPool[qNumber].option[3] + "</span>");
 
 		//Activates canAnswer so the player can answer the question
 		canAnswer = true;
@@ -288,10 +296,11 @@
 		//Hides timer, question, and option
 		$("#timer").text("");
 		$("#question").css("color", "white");
-		$(".optionButton").css("color", "#ccc");
+		$(".optionButton").css("color", "#222");
 		//Resets button colors
-		$(".optionButton").css("background-color", "#ccc");
+		$(".optionButton").css("background-color", "#222");
 		$(".buttonLetter").css("color", "orange");
+		$(".questionText").css("color", "#222");
 	
 		//If question 4, moves the phase forward 1
 		if(questionNum === 4) {

@@ -28,14 +28,14 @@ h2, h3 {
 
 /*TalkBubble IDs copied from https://css-tricks.com/examples/ShapesOfCSS/*/
 #talkbubble {
-   width: 600px;
+   width: 90%;
    height: 200px;
    background: white;
    position: relative;
    border: 4px solid black;
-   -moz-border-radius:    10px;
+   -moz-border-radius: 10px;
    -webkit-border-radius: 10px;
-   border-radius:         10px;
+   border-radius: 10px;
    
    display: flex;
    justify-content: center;
@@ -54,26 +54,56 @@ h2, h3 {
    border-bottom: 13px solid transparent;
 }
 
+
+/* Old, non-hexagonal buttons
 .optionButton {
-  width: 400px;
+  width: 450px;
   height: 50px;
-  background: #aaa;
-  border: 3px solid #444;
-  border-radius: 40px;
-
+  background: #222;
+  border: 3px solid lightblue;
+  /*border-radius: 40px;*/
 }
-/*.optionBubble:before {
-  content:"";
-  position: absolute;
-  right: 100%;
-  top: 87px;
-  width: 0;
-  height: 0;
-  border-top: 13px solid transparent;
-  border-right: 26px solid yellow;
-  border-bottom: 13px solid transparent;
 
-}*/
+
+.optionButton {
+  position: relative;
+  height: 0px; 
+  width: 239.81px;
+  background-color: yellow;
+  margin: 10px auto;
+  border-top: solid 5px lightblue;
+  border-bottom: solid 5px lightblue;
+  border-radius: 3%;
+  z-index: 1; 
+}
+
+.optionButton:before,
+.optionButton:after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 64px;
+  height: 64px;
+  -webkit-transform: scaleY(0.5774) rotate(-45deg);
+  -ms-transform: scaleY(0.5774) rotate(-45deg);
+  transform: scaleY(0.5774) rotate(-45deg);
+  background-color: inherit;
+  top: 0px;
+}
+.optionButton:before {
+  left: 10px;
+  border-left: solid 7.9953px lightblue;
+  border-top: solid 7.9953px lightblue;
+  border-radius: 3%;
+  z-index: 0;
+}
+
+.optionButton:after {
+  right: 10px;
+  border-right: solid 7.9953px lightblue;
+  border-bottom: solid 7.9953px lightblue;
+  border-radius: 3%;
+}
 
 .buttonLetter {
   float: left;
@@ -83,11 +113,12 @@ h2, h3 {
   color: orange;
   z-index: 1;
   position: relative;
-  left: 25px;
+  left: 10px;
 }
 .questionText {
+  color: white;
   font-weight: bold;
-  font-size: 19px;
+  font-size: 15px;
   line-height: 43px;
   position: relative;
   left: -18px;
@@ -133,3 +164,42 @@ h2, h3 {
   animation: optionFlash .2s infinite;
 }
 
+/*
+  These rules take effect when the browser's width
+  is either 768px or less.
+*/
+@media screen and (max-width: 992px) {
+  .optionButton:before {
+    left:30px;
+    top:-6px;
+    
+  }
+  .optionButton:after{
+    right:30px;
+    top:-6px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .optionButton:before {
+    left:22px;
+    top:-5px;
+  }
+  .optionButton:after{
+    right:22px;
+    top:-5px;
+  }
+}
+
+/*
+  These rules take effect when the browser's width
+  is either 480px or less.
+*/
+@media screen and (max-width: 480px) {
+  .optionButton:before {
+    left:6px;
+  }
+  .optionButton:after{
+    right:6px;
+  }
+}
