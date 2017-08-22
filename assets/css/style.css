@@ -1,5 +1,5 @@
 body {
-  background-image: url("../images/digital_tube_ones_zeroes.jpg");
+  background-image: url("../images/background1.jpg");
 }
 
 h2, h3 {
@@ -57,11 +57,10 @@ h2, h3 {
 .optionButton {
   width: 400px;
   height: 50px;
-  color: white;
-  font-weight: bold;
   background: #aaa;
   border: 3px solid #444;
   border-radius: 40px;
+
 }
 /*.optionBubble:before {
   content:"";
@@ -75,6 +74,24 @@ h2, h3 {
   border-bottom: 13px solid transparent;
 
 }*/
+
+.buttonLetter {
+  float: left;
+  line-height: 41px;
+  font-weight: bold;
+  font-size: 30px;
+  color: orange;
+  z-index: 1;
+  position: relative;
+  left: 25px;
+}
+.questionText {
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 43px;
+  position: relative;
+  left: -18px;
+}
 
 .bubbleFace {
 	background: #faf3fb;

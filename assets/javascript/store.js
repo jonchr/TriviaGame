@@ -11,7 +11,8 @@
 							"Lucky number seven's on its way", //seventh question lead in
 							"Watch out! Here's question eight: ", //eighth question lead in
 							"Hang in there! Here's question nine: ", //ninth question lead in
-							"Here is our final question. I hope you're ready"]; //tenth question lead in
+							"Here is our final question. I hope you're ready", //tenth question lead in
+							"We are verifying your results..."] //final intermission before results
 
 	//Array of Regis's sayings for when the player did not answer
 	var noResponse = ["Getting the jitters out, are we? Take a few seconds now.", //first timeout response

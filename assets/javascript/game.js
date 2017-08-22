@@ -89,7 +89,7 @@
 
 	//Starts the game when the Begin button is pressed and runs it through to endGame
 	function beginGame() {
-		phase = 1;
+		phaseUp();
 		$("#timer").empty();
 
 		//Randomly generates the 10 questions that will be asked
@@ -138,24 +138,7 @@
 		
 		//Updates the background and question music depending on the phase of the game
 		currentSong.pause();
-		switch(phase) {
-			case 1:
-				currentSong = questionMusic1;
-				break;
-			case 2:
-				currentSong = questionMusic2;
-				break;
-
-			case 3:
-				currentSong = questionMusic3;
-				break;
-
-			case 4:
-				currentSong = questionMusic4;
-				break;
-			default:
-				//NO MUSIC
-		}
+		currentSong = questionMusic;
 		currentSong.currentTime = 0;
 		//If not muted, plays the question music
 		if(!muted) {
@@ -171,10 +154,10 @@
 
 		//Lists the question and the four answer options
 		$("#question").text(questionPool[qNumber].question);
-		$("#option1").text(questionPool[qNumber].option[0]);
-		$("#option2").text(questionPool[qNumber].option[1]);
-		$("#option3").text(questionPool[qNumber].option[2]);
-		$("#option4").text(questionPool[qNumber].option[3]);
+		$("#option1").html("<span class='buttonLetter A'>A &#x2022</span><span class='questionText'>" + questionPool[qNumber].option[0] + "</span>");
+		$("#option2").html("<span class='buttonLetter B'>B &#x2022</span><span class='questionText'>" + questionPool[qNumber].option[1] + "</span>");
+		$("#option3").html("<span class='buttonLetter C'>C &#x2022</span><span class='questionText'>" + questionPool[qNumber].option[2] + "</span>");
+		$("#option4").html("<span class='buttonLetter D'>D &#x2022</span><span class='questionText'>" + questionPool[qNumber].option[3] + "</span>");
 
 		//Activates canAnswer so the player can answer the question
 		canAnswer = true;
@@ -196,7 +179,7 @@
 				$("#timer").html("<h2 class='bulgingRed'>" + questionTimer + "</b></h2>");
 			}
 			//If questionTimer is 0, calls answer(""); otherwise decreases it by 1
-			questionTimer-- || answer("");;
+			questionTimer-- || answer("");
 		}, 1000);
 	}
 
@@ -219,8 +202,9 @@
 			//Regis confirms your selection
 			$("#message").html(questionLetter[theirAnswer] + " is your final answer...");
 			
-			//Marks their selected answer in orange
+			//Marks their selected answer in orange and the optionLetter black
 			$("#option" + (parseInt(theirAnswer) + 1)).css("background-color", "orange");
+			$("." + questionLetter[theirAnswer]).css("color", "black");
 
 			currentSong.pause();
 			currentSong = answerPauseMusic;
@@ -307,10 +291,11 @@
 		$(".optionButton").css("color", "#ccc");
 		//Resets button colors
 		$(".optionButton").css("background-color", "#ccc");
+		$(".buttonLetter").css("color", "orange");
 	
 		//If question 4, moves the phase forward 1
 		if(questionNum === 4) {
-			phase++;
+			phaseUp();
 			//Plays phase up intermission music
 			currentSong.pause();
 			currentSong = phaseUpMusic1
@@ -321,7 +306,7 @@
 		}
 		//If question 7, moves the phase forward 1
 		else if (questionNum === 7) {
-			phase++;
+			phaseUp();
 			//Plays phase up intermission music
 			currentSong.pause();
 			currentSong = phaseUpMusic2;
@@ -332,7 +317,8 @@
 		}
 		//If question 10, moves the phase forward 1
 		else if (questionNum === 10) {
-			phase++;
+			phaseUp();
+			intermissionTime = 5000;
 			//Updates background image for phase
 		}
 		else {
@@ -344,6 +330,16 @@
 		setTimeout(function() { nextQuestion() }, intermissionTime);
 	}
 
+	//Increases the phase of the game
+	function phaseUp() {
+		phase++;	
+		//Updates the question music, correct music, and background for the phase
+		questionMusic.setAttribute("src", "./assets/audio/questionMusic" + phase + ".mp3");
+		correctSong.setAttribute("src", "./assets/audio/correct" + phase + ".mp3");
+		$("body").css("background-image", "url('./assets/images/background" + phase + ".jpg')");
+
+	}
+
 	//Function that handles the end of a new game
 	function endGame() {
 		
@@ -352,10 +348,18 @@
 		$("#question").css("color","black");
 
 		//Displays results
-		$("#message").html("Here are your final results!");
 		$("#question").html("<p><b>Correct Answers: </b>" + correct + "<br /><b>Incorrect Answers: </b>" + incorrect + "<br /><b>Unanswered Questions: </b>" + unanswered) + "</p>";
 		
-		currentSong = outroSong;
+		//If perfect score, different message and music
+
+		if(incorrect === 0 && unanswered === 0) {
+			$("#message").html("Outstanding! A perfect score!");
+			currentSong = perfectScore;
+		}
+		else {
+			$("#message").html("Here are your final results!");
+			currentSong = outroSong;
+		}
 		if(!muted) {
 			currentSong.play();
 		}
@@ -368,6 +372,7 @@
 			$("#timer").append("<button id='start'>Restart</button>");
 			$(document).on("click", "#start", function() { 
 				currentSong.pause();
+				phase = 0;
 				beginGame();
 			})
 		}, intermissionTime);
