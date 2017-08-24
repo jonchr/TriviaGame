@@ -113,9 +113,9 @@
 			answer: 2
 		},
 		q17: {
-			question: "When did the Liberty Bell get its name?",
-			option: ["when it was made, in 1701","when it rang on July 4, 1776","in the 19th century, when it became a symbol of the abolition of slavery","none of the above"],
-			answer: 2
+			question: "What architect designed the glass pyramid in the courtyard of the Louvre?",
+			option: ["Phillip Johnson","Le Corbusier","Frank Gehry","I.M. Pei"],
+			answer: 3
 		},
 		q18: {
 			question: "In the Roy Rogers -Dale Evans Museum, you will find Roy and Dales stuffed horses. Roy's horse was named Trigger, which was Dales horse?",
@@ -123,13 +123,13 @@
 			answer: 0
 		},
 		q19: {
-			question: "The Daniel Boon museum at the home where he died can best be described how?",
-			option: ["a log cabin in Kentucky","a two-story clapboard house in Tennessee","a four-story Georgian-style home in Missouri","a three story brick house in Arkansas"],
-			answer: 2
+			question: "Which of these U.S. Presidents appeared on the television series, \"Laugh-In\"?",
+			option: ["Lyndon Johnson", "Richard Nixon", "Jimmy Carter", "Gerald Ford"],
+			answer: 1
 		},
 		q20: {
 			question: "Which of the following items was owned by the fewest U.S. homes in 1990?",
-			option: ["home computer","compact disk player","cordless phone","dishwasher"],
+			option: ["Home computer","Compact disk player","Cordless phone","Dishwasher"],
 			answer: 1
 		},
 		q21: {
@@ -164,7 +164,7 @@
 		},
 		q27: {
 			question: 'What did the "D" in "D-Day" stand for?',
-			option: ["doom","day","Dwight D. Eisenhower","Dunkirk"],
+			option: ["Doom","Day","Dwight D. Eisenhower","Dunkirk"],
 			answer: 1
 		},
 		q28: {
