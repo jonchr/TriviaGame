@@ -90,6 +90,7 @@ h3 {
 .optionButton {
     margin: 5px auto;
     width: 90%;
+    min-width: 340px;
     max-width: 400px;
     height: 50px;
     border: 3px solid lightblue;
@@ -237,7 +238,7 @@ h3 {
 
 @media screen and (max-width: 767px) {
     .outerHex:before {
-      left: 159px;
+     
     }
     .outerHex:after {
       right: 158px;
@@ -257,12 +258,17 @@ h3 {
   is either 480px or less.
 */
 @media screen and (max-width: 480px) {
-    .optionButton:before {
-        left: 6px;
+    .outerHex:before{
+    	left: 15px;
     }
-
+    .outerHex:after{
+		right: 15px;
+    }
+    .optionButton:before {
+        left: -22px;
+    }
     .optionButton:after {
-        right: 6px;
+        right: -22px;
     }
 }
 

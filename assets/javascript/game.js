@@ -103,7 +103,7 @@
 	    $("#question").html(introduction);
 
 	    //Hides option buttons
-	    // $(".outerHex").hide();
+	    $(".outerHex").hide();
 
 	    //Loads start button and assigns start function
 	    $("#timer").append("<button id='start'>Start</button>");
@@ -133,7 +133,7 @@
 
 	    //Sets the question number to 1 and starts the round of questions
 	    questionNum = 1;
-	    // nextQuestion();
+	    nextQuestion();
 
 	}
 
