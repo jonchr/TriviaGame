@@ -53,7 +53,7 @@
 			answer: 0
 		},
 		q5: {
-			question: "Which country is ruled by a single dynasty for more than two thousand years?",
+			question: "Which country has been ruled by a single dynasty for more than two thousand years?",
 			option: ["England","Persia","Japan","Egypt"],
 			answer: 2
 		},
@@ -108,7 +108,7 @@
 			answer: 0
 		},
 		q16: {
-			question: "In the year 1900 in the U.S. what were the most popular first names given to boy and girl babies?",
+			question: "What were the most popular first names given to boy and girl babies in the U.S. in the year 1900?",
 			option: ["William and Elizabeth","Joseph and Catherine","John and Mary","George and Anne"],
 			answer: 2
 		},

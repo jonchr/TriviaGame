@@ -31,9 +31,7 @@ h3 {
     float: left;
 }
 
-
 /*TalkBubble IDs copied from https://css-tricks.com/examples/ShapesOfCSS/*/
-
 #talkbubble {
     width: 90%;
     height: 200px;
@@ -51,21 +49,19 @@ h3 {
     margin: 0px auto;
 }
 
-#talkbubble:before  {
+#talkbubble:before {
     content: "";
     position: absolute;
     right: 100%;
     top: 87px;
     width: 100px;
-    height: 0;
+    height: 0px;
     border-top: 13px solid transparent;
     border-right: 26px solid white;
     border-bottom: 13px solid transparent;
 }
 
 }
-
-
 .outerHex{
     height: 55px;
     background-color: lightblue;
@@ -171,7 +167,7 @@ h3 {
 }
 
 .startButton {
-    border: 1px double black`;
+    border: 1px double black;
 }
 
 @keyframes fontbulger {
@@ -193,32 +189,68 @@ h3 {
 
 /*
   These rules take effect when the browser's width
-  is either 768px or less.
+  is less than 1200px.
 */
-@media screen and (max-width: 992px) {
-    .optionButton:before {
-        left: 30px;
-        top: -6px;
+@media screen and (max-width: 1199px) {
+    .outerHex:before {
+        left: 9px;
     }
-
+    .outerHex:after {
+        right: 9px;
+    }
+    .optionButton:before {
+        left: -22px;
+    }
     .optionButton:after {
-        right: 30px;
-        top: -6px;
+        right: -22px;
+    }
+    .talkBubble:before {
+
     }
 }
 
-@media screen and (max-width: 768px) {
-    .optionButton:before {
-        left: 22px;
-        top: -5px;
+/*
+  These rules take effect when the browser's width
+  is less than 992px.
+*/
+@media screen and (max-width: 991px) {
+    .outerHex:before {
+        left: 150px;
     }
-
+    .outerHex:after {
+        right: 150px;
+        top: 0px;
+    }
+    .optionButton:before {
+        left: -22px;
+    }
     .optionButton:after {
-        right: 22px;
-        top: -5px;
+        right: -22px;
+    }
+    .talkBubble:before {
+
+    }
+    #option1, #option2, #option4 {
+      margin-top: 12px;
     }
 }
 
+@media screen and (max-width: 767px) {
+    .outerHex:before {
+      left: 159px;
+    }
+    .outerHex:after {
+      right: 158px;
+    }
+    .optionButton:before {
+        /*left: 22px;*/
+        /*top: -5px;*/
+    }
+    .optionButton:after {
+        /*right: 22px;*/
+        /*top: -5px;*/
+    }
+}
 
 /*
   These rules take effect when the browser's width

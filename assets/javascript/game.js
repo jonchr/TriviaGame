@@ -84,7 +84,7 @@
 	        if (choice === "A" || choice === "B" || choice === "C" || choice === "D") {
 	            
 	            //Sets optionButton color to orange and letter black
-	            $("#option" + questionLetter.indexOf(choice)).addClass("OB_orange");
+	            $("#option" + (questionLetter.indexOf(choice) + 1)).addClass("OB_orange");
 	            $("." + choice).css("color", "black");
 
 	            //If the answer is appropriate, converts it to the position number and submits it
@@ -103,7 +103,7 @@
 	    $("#question").html(introduction);
 
 	    //Hides option buttons
-	    $(".outerHex").hide();
+	    // $(".outerHex").hide();
 
 	    //Loads start button and assigns start function
 	    $("#timer").append("<button id='start'>Start</button>");
@@ -133,7 +133,7 @@
 
 	    //Sets the question number to 1 and starts the round of questions
 	    questionNum = 1;
-	    nextQuestion();
+	    // nextQuestion();
 
 	}
 
@@ -308,7 +308,6 @@
 	    //Flashes 10 times by adding and remove the turquoise class every .1 seconds, to end on turquoise
 	    var colorFlash = 0;
 	    var flash = setInterval(function() {
-        	console.log("Flash", colorFlash);
 
         	if(colorFlash % 2 === 0) correctAnswerOption.addClass("OB_turquoise");
         	else correctAnswerOption.removeClass("OB_turquoise");
