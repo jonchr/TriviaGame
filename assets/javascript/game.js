@@ -118,6 +118,9 @@
 	    $("#timer").empty();
 	    $(".outerHex").show();
 
+	    //Resets the height of the message box to default of 200px 
+	    $("#talkBubble").css("height", "200px");
+
 	    //Randomly generates the 10 questions that will be asked
 	    for (var i = 0; i < maxQuestions; i++) {
 	        var randQ = "q" + Math.floor(Math.random() * questionPool.length + 1);
@@ -304,6 +307,10 @@
 	function flashCorrectAnswer(correctAnswerNum) {
 	    //The option button of the correct answer
 	    var correctAnswerOption = $("#option" + (correctAnswerNum));
+
+	    //Makes the correct answer text black
+	    correctAnswerOption.css("color", "black");
+	    $("." + correctAnswerOption.attr("data-letter")).css("color", "black");
 	    
 	    //Flashes 10 times by adding and remove the turquoise class every .1 seconds, to end on turquoise
 	    var colorFlash = 0;
@@ -313,7 +320,7 @@
         	else correctAnswerOption.removeClass("OB_turquoise");
 
 	        colorFlash++;
-	        if(colorFlash >= 10) clearInterval(flash);
+	        if(colorFlash > 10) clearInterval(flash);
 	    }, 100);
 	}
 
@@ -382,6 +389,9 @@
 	    //Resets the text color to black
 	    $("#timer").css("color", "black");
 	    $("#question").css("color", "black");
+
+	    //Expands the height of the message box for the contents
+	    $("#talkBubble").css("height", "230px");
 
 	    //Displays results
 	    $("#question").html("<p><b>Correct Answers: </b>" + correct + "<br /><b>Incorrect Answers: </b>" + incorrect + "<br /><b>Unanswered Questions: </b>" + unanswered) + "</p>";
