@@ -118,7 +118,7 @@
 			answer: 3
 		},
 		q18: {
-			question: "In the Roy Rogers-Dale Evans Museum, you will find Roy and Dales stuffed horses. Roy's horse was named Trigger, which was Dales horse?",
+			question: "In the Roy Rogers-Dale Evans Museum, you will find Roy and Dale's stuffed horses. Roy's horse was named Trigger. Which was Dale's horse?",
 			option: ["Buttermilk","Daisy","Scout","Tulip"],
 			answer: 0
 		},

@@ -195,10 +195,10 @@ h3 {
 */
 @media screen and (max-width: 1199px) {
     .outerHex:before {
-        left: 9px;
+        left: 7px;
     }
     .outerHex:after {
-        right: 9px;
+        right: 7px;
     }
     .optionButton:before {
         left: -22px;
@@ -224,17 +224,17 @@ h3 {
         top: 0px;
     }
     .optionButton:before {
-        left: -22px;
+        left: -21px;
     }
     .optionButton:after {
-        right: -22px;
+        right: -21px;
     }
     #talkBubble {
         margin: 20px auto 0px;
     }
     #talkBubble:before {
         margin: auto;
-        top: -100px;
+        top: -99px;
         left: 46%;
         width: 0px;
         height: 100px;
@@ -268,17 +268,13 @@ h3 {
     .buttonLetter {
        margin-left: 10px;
     }
-    #talkBubble {
-        height: 230px;
-    }
-
 }
 
 /*
   These rules take effect when the browser's width
   is either 480px or less.
 */
-@media screen and (max-width: 480px) {
+/*@media screen and (max-width: 480px) {
     .outerHex:before{
     	left: 15px;
     }
@@ -291,7 +287,7 @@ h3 {
     .optionButton:after {
         right: -22px;
     }
-}
+}*/
 
 
 /* Old, non-hexagonal buttons

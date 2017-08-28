@@ -1,5 +1,7 @@
 	//Stores the X number of randomly-selected questions determined at the start of a game
 	var questions = [];
+	//Max questions asked per round; greater than 10 will likely mess the game up
+	var maxQuestions = 10; 
 
 	//Stores the number of questions correct, incorrect, and unanswered respectively
 	var correct = 0;
@@ -16,8 +18,7 @@
 	var questionNum;
 	var currentQuestion;
 
-	//Variable of max number of questions and delay times
-	var maxQuestions = 10; //Max questions asked per round; greater than 10 will likely mess the game up
+	//Variables for length of delays
 	var timePerQuestion = 30; //30 seconds allotted per question
 	var answerPause = 3000; //3 seconds before the answer is revealed
 	var answerDisplayTime = 4000; //5 seconds when answer is displayed 
@@ -112,10 +113,23 @@
 
 	//Starts the game when the Begin button is pressed and runs it through to endGame
 	function beginGame() {
+
+	    //Resets the scores and questions
+	    correct = 0;
+		incorrect = 0;
+		unanswered = 0;
+		questions = [];
+		phase = 0;
+
 		//Moves the game to phase 1
 	    phaseUp();
-	    //Clears submit button, and reveals option buttons
-	    $("#timer").empty();
+
+	    //Pauses the current song
+	    currentSong.pause();
+
+	    //Clears start button and any text in timer, and reveals option buttons
+	    $("#timer").text("");
+	    $("#start").remove();
 	    $(".outerHex").show();
 
 	    //Resets the height of the message box to default of 200px 
@@ -133,7 +147,7 @@
 	        //Adds question to array
 	        questions.push(randQ);
 	    }
-
+	
 	    //Sets the question number to 1 and starts the round of questions
 	    questionNum = 1;
 	    nextQuestion();
@@ -338,12 +352,34 @@
 	    $(".optionButton").removeClass("OB_orange");
 	    $(".optionButton").removeClass("OB_turquoise");
 
+	    //If you've exhausted all the questions
+	    if (questionNum > questions.length) {
+	    	$("#message").html("We are verifying your results..."); //Hardcoding this for if the number of questions is changed
+		    
+		    //Starts the ending music during the final intercession
+		    //Plays a different song if they scored a perfect game
+		    if (incorrect === 0 && unanswered === 0) {
+				currentSong = perfectScore;	
+				currentSong.currentTime = 0;
+
+				//When you have a perfect game, waits 2 seconds before starting the perfect music
+				setTimeout(function() { 
+					if (!muted) currentSong.play();
+				}, 2000);
+		    } 
+		    else {
+		    	currentSong = outroSong;
+		    	currentSong.currentTime = 0;
+		    	if (!muted) currentSong.play();
+	    	}
+	    }
 	    //If question 4, moves the phase forward 1
-	    if (questionNum === 4) {
+	    else if (questionNum === 4) {
 	        phaseUp();
 	        //Plays phase up intermission music
 	        currentSong.pause();
 	        currentSong = phaseUpMusic1
+	        currentSong.currentTime = 0;
 	        currentSong.play();
 
 	        //sets intermission music to long enough for the full music
@@ -355,6 +391,7 @@
 	        //Plays phase up intermission music
 	        currentSong.pause();
 	        currentSong = phaseUpMusic2;
+	        currentSong.currentTime = 0;
 	        currentSong.play();
 
 	        //sets intermission music to long enough for the full music
@@ -364,7 +401,8 @@
 	    else if (questionNum === 10) {
 	        phaseUp();
 	        intermissionTime = 5000;
-	    } else {
+	    }
+	    else {
 	        //resets intermission time to 3 seconds
 	        intermissionTime = 3000;
 	    }
@@ -396,30 +434,18 @@
 	    //Displays results
 	    $("#question").html("<p><b>Correct Answers: </b>" + correct + "<br /><b>Incorrect Answers: </b>" + incorrect + "<br /><b>Unanswered Questions: </b>" + unanswered) + "</p>";
 
-	    //If perfect score, different message and music
-	    if (incorrect === 0 && unanswered === 0) {
-	        $("#message").html("Outstanding! A perfect score!");
-	        currentSong = perfectScore;
-	    }
-	    else {
-	        $("#message").html("Here are your final results!");
-	        currentSong = outroSong;
-	    }
-	    if (!muted) {
-	        currentSong.play();
-	    }
+	    //If perfect score, different message
+	    if (incorrect === 0 && unanswered === 0) $("#message").html("Outstanding! A perfect score!");
+	    else $("#message").html("Here are your final results!");
 
+	    //Hides the option buttons
 	    $(".outerHex").hide();
 
 	    //Gives the player 3 seconds to gloat or sulk, and then drops that restart button.
 	    setTimeout(function() {
 	        $("#timer").append('<p>Hope you had fun! If you would like to play again, hit the "Restart" button below!</p>');
 	        $("#timer").append("<button id='start'>Restart</button>");
-	        $(document).on("click", "#start", function() {
-	            currentSong.pause();
-	            phase = 0;
-	            beginGame();
-	        })
+	        //Start button function is inherited from previous one
 	    }, intermissionTime);
 
 	}
