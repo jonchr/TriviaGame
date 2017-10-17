@@ -40,5 +40,5 @@ Upon cloning to your local machine, you can change the layout by editing index.h
 ![Intermission Screenshot](assets/images/phase3intermission.png)
 ### A Correct Answer in Phase Four
 ![Correct Screenshot](assets/images/phase4correct.png)
-### Perfect Results
+### A Perfect Game
 ![Results Screenshot](assets/images/results.png)
